@@ -1,0 +1,18 @@
+SMAP
+addPost2_jsp.java
+JSP
+*S JSP
+*F
++ 0 addPost2.jsp
+blogger/addPost2.jsp
+*L
+5,44:48
+49,6:93
+54,3:99
+57:102,3
+58,2:105
+60:107,3
+61,4:110
+65,4:115
+68,95:119
+*E

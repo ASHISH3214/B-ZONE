@@ -1,0 +1,163 @@
+<%-- 
+    Document   : changeBlogStatus
+    Created on : 12 Jun, 2021, 5:37:52 PM
+    Author     : HP
+--%>
+
+
+<%@page import="com.daos.CategoryDao"%>
+<%@page import="com.beans.Category"%>
+<%@page import="com.daos.BlogDao"%>
+<%@page import="com.beans.Admin"%>
+<%@page import="com.beans.Blog"%>
+<%@page import="java.util.ArrayList"%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">  
+    <title>Visual Admin Dashboard - Home</title>
+    <meta name="description" content="">
+    <meta name="author" content="templatemo">
+    <!-- 
+    Visual Admin Template
+    https://templatemo.com/tm-455-visual-admin
+    -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/templatemo-style.css" rel="stylesheet">
+    
+
+  </head>
+  <body>  
+      <%
+          Admin admin = (Admin)session.getAttribute("admin");
+          if(admin == null){
+              response.sendRedirect("../alogin.jsp?errorMessage=Session Expired! please Login Again");
+              return;
+          }
+      %>
+    <!-- Left column -->
+    <div class="templatemo-flex-row">
+        <jsp:include page="sidebar.jsp"></jsp:include>
+      <!-- Main content --> 
+      <div class="templatemo-content col-1 light-gray-bg">
+      <jsp:include page="header.jsp"></jsp:include>
+        <div class="templatemo-content-container">
+          
+            <center><h2>Details of Blog</h2></center><hr/>
+            <%
+                int id = Integer.parseInt(request.getParameter("id"));
+                BlogDao bd = new BlogDao();
+                Blog blog = bd.getBlogDetailById(id);
+               // ArrayList<Category> clist = bd.getBlogsByCategory;
+                
+                
+            %><center>
+            <form action="../BlogController?op=changeStatus" method="post"> 
+            <div class="card" class="col col-md-6 col-lg-6" style="width:400px;font-size: 20px;font-style: corbel;">
+                <input type="text" name="id" value="<%=blog.getId()%>" readonly/>
+                <img class="card-img-top" src="../<%=blog.getPoster()%>"alt="Card image" style="width:250px;height:3 00px;border-radius: 20px;">
+       <div class="card-body">
+           <h4 class="card-title"><%=blog.getTitle()%></h4>
+           <p class="card-text"><b>Posting Date</b> : <%=blog.getDate()%></p>
+           <p class="card-text"><b>Post Description</b>
+               <%=blog.getDescription()%>
+           </p>
+           <p class="card-text"><b>Select Categories</b> <br/>
+               <%for(Category c :(new CategoryDao().getCategoriesByBlogId(id))) {%>
+           <li> <%=c.getName()%> </li>
+           <%}%>
+       </p>
+       
+       <p class="form-group"><b>Change Status</b> :<br/>
+           <select name="status" class="dropdown">
+               <option value="pending" <%=blog.getStatus().equals("pending")?"selected":""%>>Pending</option>
+               <option value="approved" <%=blog.getStatus().equals("approved")?"selected":""%>>Approved</option>
+               <option value="rejected" <%=blog.getStatus().equals("rejected")?"selected":""%>>Rejected</option>
+         
+           </select>
+       </p> 
+       <a href="showBlogs.jsp" class="btn btn-success"> Back</a><br/>
+       <input type="submit" class="btn btn-primary" value="save"/>
+    </div>
+  </div>
+           
+            </form>
+            
+            </center>
+                    
+        </div>
+      </div>
+    </div>
+    
+    <!-- JS -->
+    <script src="assets/js/jquery-1.11.2.min.js"></script>      <!-- jQuery -->
+    <script src="assets/js/jquery-migrate-1.2.1.min.js"></script> <!--  jQuery Migrate Plugin -->
+    <script src="https://www.google.com/jsapi"></script> <!-- Google Chart -->
+    <script>
+      /* Google Chart 
+      -------------------------------------------------------------------*/
+      // Load the Visualization API and the piechart package.
+      google.load('visualization', '1.0', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(drawChart); 
+      
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+          // Create the data table.
+          var data = new google.visualization.DataTable();
+          data.addColumn('string', 'Topping');
+          data.addColumn('number', 'Slices');
+          data.addRows([
+            ['Mushrooms', 3],
+            ['Onions', 1],
+            ['Olives', 1],
+            ['Zucchini', 1],
+            ['Pepperoni', 2]
+          ]);
+
+          // Set chart options
+          var options = {'title':'How Much Pizza I Ate Last Night'};
+
+          // Instantiate and draw our chart, passing in some options.
+          var pieChart = new google.visualization.PieChart(document.getElementById('pie_chart_div'));
+          pieChart.draw(data, options);
+
+          var barChart = new google.visualization.BarChart(document.getElementById('bar_chart_div'));
+          barChart.draw(data, options);
+      }
+
+      $(document).ready(function(){
+        if($.browser.mozilla) {
+          //refresh page on browser resize
+          // http://www.sitepoint.com/jquery-refresh-page-browser-resize/
+          $(window).bind('resize', function(e)
+          {
+            if (window.RT) clearTimeout(window.RT);
+            window.RT = setTimeout(function()
+            {
+              this.location.reload(false); /* false to get page from cache */
+            }, 200);
+          });      
+        } else {
+          $(window).resize(function(){
+            drawChart();
+          });  
+        }   
+      });
+      
+    </script>
+    <script type="text/javascript" src="js/templatemo-script.js"></script>      <!-- Templatemo Script -->
+
+  </body>
+</html>
+
