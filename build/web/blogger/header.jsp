@@ -2,9 +2,7 @@
           <div class="row">
             <nav class="templatemo-top-nav col-lg-12 col-md-12">
               <ul class="text-uppercase">
-                <li><a href="" class="active">Blogger panel</a></li>
-                <li><a href="">Dashboard</a></li>
-                <li><a href="">Overview</a></li>
+                
                 
               </ul>  
             </nav> 

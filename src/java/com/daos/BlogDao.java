@@ -10,6 +10,7 @@ import java.sql.*;
 import com.db.DataConnection;  
 import com.beans.Blog;
 import com.beans.Blogger;
+import com.beans.Category;
 
 public class BlogDao {
     public int getBlogCountByCategory(int catid){
@@ -407,4 +408,29 @@ public class BlogDao {
          return count;
          
      }
+     
+     public ArrayList<Category> getCategoriesByBlogId(int id){
+        ArrayList<Category> categoryList= new ArrayList();
+        
+        try {
+            Connection con = DataConnection.getConnection();
+            String sql = " select * from categories where id in (select categoryid from blogcategory where blogid=?);";
+            PreparedStatement smt = con.prepareStatement(sql);
+            smt.setInt(1, id);
+            ResultSet rs = smt.executeQuery();
+            
+            while(rs.next()){
+                Category c = new Category();
+                c.setId(rs.getInt("id"));
+                c.setName(rs.getString("name"));
+                c.setDescription(rs.getString("description"));
+                
+                categoryList.add(c);
+            }
+            
+        } catch (Exception e) {
+            System.out.println("Error in fetching all categories..." + e.getMessage());
+        }
+        return categoryList;
+    }
 }

@@ -4,6 +4,7 @@
     Author     : HP
 --%>
 
+<%@page import="com.beans.Category"%>
 <%@page import="com.daos.BloggerDao"%>
 <%@page import="com.beans.Blogger"%>
 <%@page import="com.beans.Blog"%>
@@ -104,8 +105,16 @@ https://templatemo.com/tm-551-stand-blog
                           
                       }   
                       
-                       for(Blog blog : blogList){%>
-                      
+                       for(Blog blog : blogList){%> 
+             
+                       
+                 <%
+                int id = blog.getId();
+                BlogDao b = new BlogDao();
+                ArrayList<Category> clist = b.getCategoriesByBlogId(id);
+                 %>
+                
+           
                  <div class="col-lg-12">
                   <div class="blog-post">
                     <div class="blog-thumb">
@@ -116,7 +125,7 @@ https://templatemo.com/tm-551-stand-blog
                         <a href="postDetails.jsp?id=<%=blog.getId()%>"><h4><%=blog.getTitle()%></h4></a>
                       <ul class="post-info">
                           <li><a href="postDetails.jsp?id=<%=blog.getId()%>"><%=(new BloggerDao().getById(blog.getBloggerId()).getName())%></a></li>
-                          <li><a href="postDetails.jsp?id=<%=blog.getId()%>"><%=blog.getDate()%></a></li>
+                          <li><a href="postDetails.jsp?id=<%=blog.getId()%>"><%=blog.getDate().substring(0,10)%></a></li>
                           <li><a href="postDetails.jsp?id=<%=blog.getId()%>">12 Comments</a></li>
                       </ul>
                       <p><%=blog.getDescription().length()>200?blog.getDescription().substring(0,200):blog.getDescription()%> 
@@ -127,15 +136,17 @@ https://templatemo.com/tm-551-stand-blog
                           <div class="col-6">
                             <ul class="post-tags">
                               <li><i class="fa fa-tags"></i></li>
-                              <li><a href="#"><%=blog.getDate()%></a></li>
-                              <li><a href="#">Nature</a></li>
+                              
+                              <li><a href="#"> <%for(Category c : clist) {%>
+                                              <li> <%=c.getName()%> </li>,
+                                                        <%}%></a></li>
                             </ul>
                           </div>
                           <div class="col-6">
                             <ul class="post-share">
                               <li><i class="fa fa-share-alt"></i></li>
-                              <li><a href="#">Facebook</a>,</li>
-                              <li><a href="#"> Twitter</a></li>
+                              <li><a href="https://www.facebook.com/login/">Facebook</a>,</li>
+                              <li><a href="https://twitter.com/login?lang=en-gb"> Twitter</a></li>
                             </ul>
                           </div>
                         </div>

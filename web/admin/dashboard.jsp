@@ -44,6 +44,14 @@
           
             <center><h2>DashBoard Page</h2></center>
           
+             
+            <div class="card" class="col col-md-6 col-lg-6" style="width:400px;font-size: 20px;font-style: corbel;">
+                <input type="hidden" name="id" value="<%=admin.getId()%>"/>
+                <img class="card-img-top" src="../<%=admin.getPic()%>"alt="Card image" style="width:250px;height:3 00px;border-radius: 20px;">
+       <div class="card-body">
+           <h4 class="card-title"><%=admin.getName()%></h4>
+           <p class="card-text"><b>UserID</b> : <%=admin.getUserid()%></p>
+           
           
                   
         </div>

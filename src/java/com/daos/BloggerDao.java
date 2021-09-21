@@ -64,10 +64,11 @@ public class BloggerDao {
     
     public Blogger getByLoginDetails(String userid,String password){
         Blogger blogger = null;
-        
+        System.out.println("us"+","+userid+","+password);
         try {
             Connection con= DataConnection.getConnection();
             String sql = "select * from blogger where userid=? and password=?";
+            
             PreparedStatement smt=con.prepareStatement(sql);
             smt.setString(1, userid);
             smt.setString(2, password);

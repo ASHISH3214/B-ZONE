@@ -4,6 +4,9 @@
     Author     : HP
 --%>
 
+<%@page import="com.beans.Category"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.daos.BloggerDao"%>
 <%@page import="com.beans.Blogger"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -43,7 +46,29 @@
         <div class="templatemo-content-container">
           
             <center><h2>DashBoard Page</h2></center>
-          
+             
+            <%
+                int id = blogger.getId();
+                BloggerDao bd = new BloggerDao();
+                ArrayList<Category> clist = bd.getBloggerCategories(id);
+                
+                
+            %>
+            
+            
+             
+            <div class="card" class="col col-md-6 col-lg-6" style="width:400px;font-size: 20px;font-style: corbel;">
+                <input type="hidden" name="id" value="<%=blogger.getId()%>"/>
+                <img class="card-img-top" src="../<%=blogger.getPic()%>"alt="Card image" style="width:250px;height:3 00px;border-radius: 20px;">
+       <div class="card-body">
+           <h4 class="card-title"><%=blogger.getName()%></h4>
+           <p class="card-text"><b>UserID</b> : <%=blogger.getUserid()%></p>
+           <p class="card-text"><b>Gender</b> : <%=blogger.getGender()%></p>
+           <p class="card-text"><b>Contact</b> : <%=blogger.getContact()%></p>
+           <p class="card-text"><b>Selected Categories</b> <br/>
+               <%for(Category c : clist) {%>
+           <li> <%=c.getName()%> </li>
+           <%}%>
           
                   
         </div>

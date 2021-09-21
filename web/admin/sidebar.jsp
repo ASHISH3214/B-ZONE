@@ -23,8 +23,6 @@
             <li><a href="addCategory.jsp"><i class="fa fa-pencil "></i>Add Category</a></li>
             <li><a href="showBlogs.jsp"><i class="fa fa-database fa-fw"></i>Show Blogs</a></li>
             <li><a href="showBloggers.jsp"><i class="fa fa-users fa-fw"></i>Show Bloggers</a></li>
-            <li><a href="maps.html"><i class="fa fa-map-marker fa-fw"></i>Maps</a></li>
-            <li><a href="preferences.html"><i class="fa fa-sliders fa-fw"></i>Preferences</a></li>
             <li><a href="logout.jsp"><i class="fa fa-eject fa-fw"></i>Sign Out</a></li>
           </ul>  
         </nav>

@@ -69,8 +69,8 @@
                 <td><%=comment.getDescription()%></td>
                 <td> <a href="showBlogDetails.jsp?blogId=<%=comment.getBlogId()%>"> <%=new BlogDao().getBlogDetailById(comment.getBlogId()).getTitle()%> </a> </td>
                 <td><%=comment.getReply()%></td>
-                <td><a href="reply.jsp?id=<%=comment.getId()%>" class="btn btn-primary <%=comment.getReply()==null?"":"disabled"%> ">Reply</a></td>
                 
+                <td><a href="reply.jsp?id=<%=comment.getId()%>" class="btn btn-primary <%=comment.getReply().length()==0?"":"disabled"%> ">Reply</a></td>
             </tr>
               <%}%>  
             </table>

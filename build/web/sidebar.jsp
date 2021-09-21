@@ -34,7 +34,7 @@
                       for(Blog blog : bloglList){%>
                       <li><a href="index.jsp?bid=<%=blog.getId()%>">
                           <h5><%=blog.getTitle()%></h5></a>
-                          <span><%=blog.getDate()%></span>
+                          <span><%=blog.getDate().substring(0,10)%></span>
                         </li>
                         <%}%>
                       </ul>

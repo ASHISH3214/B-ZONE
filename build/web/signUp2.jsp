@@ -99,12 +99,12 @@ https://templatemo.com/tm-551-stand-blog
         <jsp:setProperty name="blogger" property="*"></jsp:setProperty>
         
         <% 
-//              blogger.setName(StringEscapeUtils.escapeHtml(blogger.getName()));
-//              blogger.setPassword(StringEscapeUtils.escapeHtml(request.getParameter("password")));
-//              blogger.setPassword(java.util.Base64.getEncoder().encodeToString(blogger.getPassword().getBytes()));
+           blogger.setName(StringEscapeUtils.escapeHtml(blogger.getName()));
+           blogger.setPassword(java.util.Base64.getEncoder().encodeToString(blogger.getPassword().getBytes()));
+          
                String[] categories = request.getParameterValues("category");
               session.setAttribute("categories", categories);
-
+              session.setAttribute("blogger", blogger);
             %>
         <div class="navbar bg-secondary text-white" >
              <h2> Upload profile Picture </h2>

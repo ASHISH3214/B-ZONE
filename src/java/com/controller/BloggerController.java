@@ -11,6 +11,7 @@ import com.sun.imageio.plugins.common.ImageUtil;
 import com.util.ImageUtility;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Base64;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -60,7 +61,7 @@ public class BloggerController extends HttpServlet {
         
         if(op!=null && op.equals("add")){
 //            String password =StringEscapeUtils.escapeHtml(request.getParameter("password"));
-//            String pwdhash = java.util.Base64.getEncoder().encodeToString(password.getBytes());
+  //         String pwdhash = java.util.Base64.getEncoder().encodeToString(password.getBytes());
             System.out.println("pwd");
             String imgPath = ImageUtility.uploadImage(request, getServletConfig(), "media");
              System.out.println("img");
@@ -71,7 +72,7 @@ public class BloggerController extends HttpServlet {
                 Blogger blogger = (Blogger)session.getAttribute("blogger");
                 blogger.setPic(imgPath);
 //                blogger.setPassword(pwdhash);
-                
+                 System.out.println(blogger.getId()+" ,"+blogger.getPassword());
                 String catIds[] = (String[]) session.getAttribute("categories");
                 session.removeAttribute("blogger");
                 session.removeAttribute("categories");
@@ -86,9 +87,16 @@ public class BloggerController extends HttpServlet {
          if(op!=null && op.equals("login")){
             String userid=request.getParameter("userid");
             String password=request.getParameter("password");
-            BloggerDao bd = new BloggerDao();
-            Blogger blogger = bd.getByLoginDetails(userid, password);
             
+            
+            String Encoding = Base64.getEncoder().encodeToString(password.getBytes());
+            
+            BloggerDao bd = new BloggerDao();
+            
+            Blogger blogger = bd.getByLoginDetails(userid, Encoding);
+             System.out.println(Encoding);
+             
+             
             if(blogger!=null){
                 if(blogger.getStatus().equalsIgnoreCase("approved")){
                     HttpSession session = request.getSession();
